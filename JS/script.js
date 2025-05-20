@@ -48,3 +48,21 @@ function playRound (humanChoice, computerChoice) {
     }
 }
 
+//Loop 5 Rondas
+function playGame () {
+    for (let contadorRonda = 1; contadorRonda <= 5; contadorRonda++) {
+        const humanSelection = getHumanChoice();
+        const computerSelection = getComputerChoice();
+        playRound(humanSelection, computerSelection);
+
+    }
+    if (humanScore < computerScore) {
+        console.log(`De las 5 rondas el ganador fue Computer, el cual tuvo puntaje de: ${computerScore}`)
+    } else {
+        console.log(`De las 5 rondas tu fuiste el ganador, el cual tuviste de puntaje: ${humanScore}`)
+    }
+}
+
+playGame()
+
+
