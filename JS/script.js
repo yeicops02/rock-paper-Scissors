@@ -11,6 +11,10 @@ function getComputerChoice () {
    
 }
 
-
+//PROMPT
+function getHumanChoice () {
+    let entradaUsuario = prompt('Vamos a jugar 5 Rondas. Elige una de estas 3 opciones "piedra", "papel" y "tijera"')
+    return entradaUsuario;
+}
 
  
