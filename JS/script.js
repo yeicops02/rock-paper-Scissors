@@ -10,12 +10,10 @@ function getComputerChoice() {
     }
 
 }
-
-//PROMPT
-function getHumanChoice() {
-    let entradaUsuario = prompt('Vamos a jugar 5 Rondas. Elige una de estas 3 opciones "piedra", "papel" y "tijera"')
-    return entradaUsuario;
+function playerSelection(e) {
+    return e.target.innerText;
 }
+
 
 //Variables de puntuación de los jugadores
 let humanScore = 0;
@@ -23,51 +21,113 @@ let computerScore = 0;
 
 //Jugar solo 1 ronda
 function playRound(humanChoice, computerChoice) {
+
     let eleccionUsuario = humanChoice.toLowerCase();
 
     if (eleccionUsuario === 'piedra' && computerChoice === 'tijera') {
         humanScore++;
-        console.log(`¡Ganaste!. ${eleccionUsuario} le gana a la ${computerChoice}`)
+        resultado_texto.textContent = `¡Ganaste!. ${eleccionUsuario.toUpperCase()} le gana a ${computerChoice.toUpperCase()}`;
+        score_parrafo.textContent = `Tu Puntaje: ${humanScore}`
+
     } else if (eleccionUsuario === 'piedra' && computerChoice === 'papel') {
         computerScore++;
-        console.log(`¡Perdiste!. ${computerChoice} le gana a la ${eleccionUsuario}`)
+        resultado_texto.textContent = `¡Perdiste!. ${computerChoice.toUpperCase()} le gana a ${eleccionUsuario.toUpperCase()}`
+        puntaje_computadora.textContent = `Puntaje Computer: ${computerScore}`
     } else if (eleccionUsuario === computerChoice) {
-        console.log('Hay un empate ')
+        resultado_texto.textContent = 'Hay un empate'
     } else if (eleccionUsuario === 'tijera' && computerChoice === 'piedra') {
         computerScore++;
-        console.log(`¡Perdiste!. ${computerChoice} le gana a la ${eleccionUsuario}`)
+        resultado_texto.textContent = `¡Perdiste!. ${computerChoice.toUpperCase()} le gana a ${eleccionUsuario.toUpperCase()}`
+        puntaje_computadora.textContent = `Puntaje Computer: ${computerScore}`
     } else if (eleccionUsuario === 'tijera' && computerChoice === 'papel') {
         humanScore++;
-        console.log(`¡Ganaste!. ${eleccionUsuario} le gana a la ${computerChoice}`)
+        resultado_texto.textContent = `¡Ganaste!. ${eleccionUsuario.toUpperCase()} le gana a ${computerChoice.toUpperCase()}`
+        score_parrafo.textContent = `Tu Puntaje: ${humanScore}`
     } else if (eleccionUsuario === 'papel' && computerChoice === 'piedra') {
         humanScore++;
-        console.log(`¡Ganaste!. ${eleccionUsuario} le gana a la ${computerChoice}`)
+        resultado_texto.textContent = `¡Ganaste!. ${eleccionUsuario.toUpperCase()} le gana a ${computerChoice.toUpperCase()}`
+        score_parrafo.textContent = `Tu Puntaje: ${humanScore}`
     } else if (eleccionUsuario === 'papel' && computerChoice === 'tijera') {
         computerScore++;
-        console.log(`¡Perdiste!. ${computerChoice} le gana a la ${eleccionUsuario}. Puntaje`)
+        resultado_texto.textContent = `¡Perdiste!. ${computerChoice.toUpperCase()} le gana a ${eleccionUsuario.toUpperCase()}`
+        puntaje_computadora.textContent = `Puntaje Computer: ${computerScore}`
     }
 }
 
 //Loop 5 Rondas
-function playGame() {
-    const humanSelection = getHumanChoice();
-    const computerSelection = getComputerChoice();
-    playRound(humanSelection, computerSelection);
+function playGame(e) {
+    
 
-    /*for (let contadorRonda = 1; contadorRonda <= 5; contadorRonda++) {
-        const humanSelection = getHumanChoice();
+        const humanSelection = playerSelection(e);
         const computerSelection = getComputerChoice();
         playRound(humanSelection, computerSelection);
 
+   
+    
+    if (humanScore === 5){
+        jugadorGanador.textContent = `Has sido el Ganador del JUEGO con ${humanScore} puntos`;
+        puntaje_computadora.textContent = "";
+        score_parrafo.textContent = "";
+        botonPiedra.disabled = true;
+        botonPapel.disabled = true;
+        botonTijera.disabled = true;
+        setTimeout (() => {
+            resultado_texto.textContent = "";
+        }, 2000)
+        resetButton.textContent = "Volver a Jugar"
+        resetButton.classList.add('reseteo')
+        containerDIV.appendChild(resetButton);
+        resetButton.addEventListener('click', Reset)
+            
+    }
+    if (computerScore === 5) {
+        jugadorGanador.textContent = `Computer ha sido el Ganador del JUEGO con ${computerScore} puntos`;
+        puntaje_computadora.textContent = "";
+        score_parrafo.textContent = "";
+        botonPiedra.disabled = true;
+        botonPapel.disabled = true;
+        botonTijera.disabled = true;
+        setTimeout (() => {
+            resultado_texto.textContent = "";
+        }, 2000)
+        resetButton.textContent = "Volver a Jugar"
+        resetButton.classList.add('reseteo')
+        containerDIV.appendChild(resetButton);
+        resetButton.addEventListener('click', Reset)
 
     }
-    if (humanScore < computerScore) {
-        console.log(`De las 5 rondas el ganador fue Computer, el cual tuvo puntaje de: ${computerScore}`)
-    } else {
-        console.log(`De las 5 rondas tu fuiste el ganador, el cual tuviste de puntaje: ${humanScore}`)
-    }*/
-}
+        
+ }
 
-playGame()
+ function Reset () {
+    resetButton.remove()
+    humanScore = 0;
+    computerScore = 0;
+    jugadorGanador.textContent = "";
+    botonPiedra.disabled = false;
+    botonPapel.disabled = false;
+    botonTijera.disabled = false;
+ }
 
+
+//Sección Escuchador de eventos
+const botonPiedra = document.querySelector('.piedra');
+const botonPapel = document.querySelector('.papel');
+const botonTijera = document.querySelector('.tijera');
+
+const resultado_texto = document.querySelector('.parrafo_resultado')
+const score_parrafo = document.querySelector('.parrafo_score_humano')
+const puntaje_computadora = document.querySelector('.parrafo_score_computer')
+const jugadorGanador = document.querySelector('.winning_player')
+const containerDIV = document.querySelector('.container_resultado')
+
+const resetButton = document.createElement('button')
+
+
+
+
+
+botonPiedra.addEventListener("click", playGame);
+botonPapel.addEventListener("click", playGame);
+botonTijera.addEventListener("click", playGame);
 
